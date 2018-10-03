@@ -183,7 +183,9 @@ class HardSourceWebpackPlugin {
       function unlockLogger() {
         logger.unlock();
       }
-      compilerHooks.watchRun.tap('HardSource - index', unlockLogger);
+      if (options.runOnWatch) {
+        compilerHooks.watchRun.tap('HardSource - index', unlockLogger);
+      }
       compilerHooks.run.tap('HardSource - index', unlockLogger);
       return;
     }
@@ -378,10 +380,12 @@ class HardSourceWebpackPlugin {
       });
     }
 
-    compilerHooks.watchRun.tapPromise(
-      'HardSource - index - readOrReset',
-      runReadOrReset,
-    );
+    if (options.runOnWatch) {
+      compilerHooks.watchRun.tapPromise(
+        'HardSource - index - readOrReset',
+        runReadOrReset,
+      );
+    }
     compilerHooks.run.tapPromise(
       'HardSource - index - readOrReset',
       runReadOrReset,
@@ -515,7 +519,9 @@ class HardSourceWebpackPlugin {
       return pluginCompat.promise(compiler, '_hardSourceVerifyCache', []);
     }
 
-    compilerHooks.watchRun.tapPromise('HardSource - index - verify', runVerify);
+    if (options.runOnWatch) {
+      compilerHooks.watchRun.tapPromise('HardSource - index - verify', runVerify);
+    }
     compilerHooks.run.tapPromise('HardSource - index - verify', runVerify);
 
     let freeze;

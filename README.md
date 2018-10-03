@@ -196,6 +196,10 @@ Caches older than `maxAge` in milliseconds are considered for automatic deletion
 
 For caches to be deleted, all of them together must total more than this threshold.
 
+#### `runOnWatch`
+
+Reading caches on each incremental rebuild, e.g. triggered by webpack-dev-server can take more time than actually rebuilding. Settings this to `false` will turn off reading the caches for such cases. Defaults to `true`
+
 ## Troubleshooting
 
 ### Configuration changes are not being detected
